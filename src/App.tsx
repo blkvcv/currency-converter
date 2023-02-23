@@ -18,15 +18,30 @@ const App = () => {
 		dataFetch()
 	}, [])
 
-	const Container = styled.div`
+	const Page = styled.div`
 		display: flex;
+		height: 100vh;
+		flex-direction: column;
+		justify-content: space-evenly;
+	`
+	const Header = styled.h1`
+		align-self: center;
+		height: 30px;
+	`
+	const AppContainer = styled.div`
+		display: flex;
+		align-content: center;
+		justify-content: space-around;
 	`
 
 	return (
-		<Container>
-			<Converter />
-			<Overview exchangeRates={data} />
-		</Container>
+		<Page>
+			<Header>Currency Converter & Exchange Rates</Header>
+			<AppContainer>
+				<Converter />
+				<Overview exchangeRates={data} />
+			</AppContainer>
+		</Page>
 	)
 }
 
