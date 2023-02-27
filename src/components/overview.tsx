@@ -1,15 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import type { ExchangeRateT } from '../types'
+import type { OverviewT } from '../types'
 import { Row } from './row'
 
 type Props = {
-	exchangeRates: ExchangeRateT[]
+	overviewRates: OverviewT[]
 }
 
 const Container = styled.div`
-	width: 800px;
+	width: 520px;
 	display: flex;
 	flex-direction: column;
 	padding: 10px;
@@ -19,11 +19,29 @@ const Container = styled.div`
 	align-self: center;
 `
 
-export const Overview = ({ exchangeRates }: Props): JSX.Element => {
+const Header = styled.div`
+	background-color: #09283e;
+	width: 100%;
+	border-radius: 8px;
+	color: white;
+	font-weight: bold;
+`
+
+export const Overview = ({ overviewRates }: Props): JSX.Element => {
 	return (
 		<Container>
-			{exchangeRates.map((exchangeRate) => (
-				<Row key={exchangeRate.code} exchangeRate={exchangeRate} />
+			<Header>
+				<Row country='Country'
+					currency='Currency'
+					rate='Rate' />
+			</Header>
+			{overviewRates.map(({ code, country, currency, rate}) => (
+				<Row
+					key={code}
+					country={country}
+					currency={currency}
+					rate={rate}
+				/>
 			))}
 		</Container>
 	)

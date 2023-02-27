@@ -1,43 +1,48 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import type { ExchangeRateT } from '../types'
-
 type Props = {
-	exchangeRate: ExchangeRateT
+	country: string
+	currency?: string
+	rate: string
 }
 
 const Container = styled.div`
 	display: flex;
-	margin: 5px;
+	justify-content: space-between;
+	border-bottom: 1px solid hsl(0, 0%, 80%);
+
+	&:first-child {
+		border-bottom: unset;
+	}
+
+	&:first-child:hover {
+		color: white;
+	}
+
+	&:last-child {
+		border-bottom: unset;
+	}
+
+	&:hover {
+		font-weight: bold;
+		color: #09283e;
+	}
 `
 
-const Country = styled.div`
+const Column = styled.div`
 	display: flex;
-	flex-basis: 40%;
-	padding: 10px 20px;
+	width: 200px;
+	padding: 10px 0;
+	justify-content: center;
 `
 
-const Currency = styled.div`
-	display: flex;
-	flex-basis: 30%;
-	padding: 10px 20px;
-`
-
-const Rate = styled.div`
-	display: flex;
-	flex-basis: 30%;
-	padding: 10px 20px;
-`
-
-export const Row = ({ exchangeRate }: Props): JSX.Element => {
+export const Row = ({ country, currency, rate }: Props): JSX.Element => {
 	return (
 		<Container>
-			<Country>{exchangeRate.country}</Country>
-			<Currency>
-				{exchangeRate.amount} {exchangeRate.code}
-			</Currency>
-			<Rate>{exchangeRate.rate}</Rate>
+			<Column>{country}</Column>
+			{currency && <Column>{currency}</Column>}
+			<Column>{rate}</Column>
 		</Container>
 	)
 }

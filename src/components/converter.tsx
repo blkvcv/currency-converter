@@ -1,9 +1,10 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 
 import styled from 'styled-components'
 import Select, { SingleValue } from 'react-select'
 
 import { ExchangeRatesMapT, ExchangeRateT } from '../types'
+import { exchangeFromCZK, exchangeToCZK, separateThousands } from '../utils'
 
 const Container = styled.div`
 	position: relative;
@@ -144,16 +145,8 @@ type Props = {
 	exchangeRatesMap: ExchangeRatesMapT
 }
 
-const exchangeFromCZK = (amount: number, rate: number, base: number): number => {
-	return Number(((base * amount) / rate).toFixed(2))
-}
-
-const exchangeToCZK = (amount: number, rate: number, base: number): number => {
-	return Number(((amount * rate) / base).toFixed(2))
-}
-
 export const Converter = ({ exchangeRatesMap }: Props) => {
-	const [inputAmount, setInputAmount] = React.useState<string | number>(0)
+	const [inputAmount, setInputAmount] = React.useState<string>()
 	const [inputError, setInputError] = React.useState<string>('')
 	const [selectedCurrencyFrom, setSelectedCurrencyFrom] = React.useState<string>('CZK')
 	const [selectedCurrencyTo, setSelectedCurrencyTo] = React.useState<string>('CZK')
@@ -186,8 +179,8 @@ export const Converter = ({ exchangeRatesMap }: Props) => {
 		} else {
 			setConversionError('Only conversions from or to CZK are supported.')
 		}
-		setConvertedDescription(`${amount} ${selectedCurrencyFrom} =`)
-		setConvertedAmount(`${converted} ${selectedCurrencyTo}`)
+		setConvertedDescription(`${separateThousands(amount)} ${selectedCurrencyFrom} =`)
+		setConvertedAmount(`${separateThousands(converted)} ${selectedCurrencyTo}`)
 	}
 
 
@@ -256,7 +249,7 @@ export const Converter = ({ exchangeRatesMap }: Props) => {
 					{conversionError ?
 						<Error>{conversionError}</Error> :
 						<Source>
-							Live exchange rates are provided by{' '}
+							Exchange rates are provided by{' '}
 							<Link target='_blank' href='https://www.cnb.cz/en/financial-markets/foreign-exchange-market/central-bank-exchange-rate-fixing/central-bank-exchange-rate-fixing/'>Czech National Bank</Link>
 						</Source>
 					}
