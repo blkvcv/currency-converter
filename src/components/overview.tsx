@@ -8,20 +8,21 @@ type Props = {
 	exchangeRates: ExchangeRateT[]
 }
 
-export const Overview = ({ exchangeRates }: Props): JSX.Element => {
-	const Container = styled.div`
-		width: 600px;
-		display: flex;
-		flex-direction: column;
-		overflow-y: auto;
-		height: 600px;
-		padding: 10px;
-		border-radius: 8px;
-		box-shadow: 0px 5px 20px 1px #aaa;
-		box-sizing: border-box;
-		position: relative;
-	`
+const Container = styled.div`
+	width: 800px;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+	height: 600px;
+	padding: 10px;
+	border-radius: 8px;
+	box-sizing: border-box;
+	top: 450px;
+	position: relative;
+	align-self: center;
+`
 
+export const Overview = ({ exchangeRates }: Props): JSX.Element => {
 	return (
 		<Container>
 			{exchangeRates.map((exchangeRate) => (

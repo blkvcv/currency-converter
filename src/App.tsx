@@ -2,45 +2,72 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
-import type { ExchangeRateT } from './types'
+import type { ExchangeRateT, ExchangeRatesMapT } from './types'
 import { Overview } from './components/overview'
 import { Converter } from './components/converter'
 
+const Page = styled.div`
+	display: flex;
+	flex-direction: column;
+`
+
+const Banner = styled.div`
+	background-image: url(background.avif);
+	height: 300px;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	background-position-y: -100px;
+`
+
+const Header = styled.div`
+	position: relative;
+	top: 10px;
+	width: 100%;
+	height: 100px;
+	display: flex;
+	flex-direction: column;
+	color: white;
+	align-items: center;
+`
+
+const Title = styled.h1`
+	margin-bottom: 0
+`
+
+const Subtitle = styled.h4`
+	margin: 5px
+`
+
+
 const App = () => {
-	const [data, setData] = useState<ExchangeRateT[]>([])
+	const [exchangeRates, setExchangeRates] = useState<ExchangeRateT[]>([])
+	const [exchangeRatesMap, setExchangeRatesMap] = useState<ExchangeRatesMapT>({})
 
 	useEffect(() => {
 		const dataFetch = async () => {
 			const result = await axios('http://0.0.0.0:5000/rates')
+			const ratesMap = result.data.reduce((acc: ExchangeRatesMapT, rate: ExchangeRateT) => {
+				acc[rate.code] = rate
 
-			setData(result.data)
+				return acc
+			}, {})
+
+			setExchangeRates(result.data)
+			setExchangeRatesMap(ratesMap)
 		}
 		dataFetch()
 	}, [])
 
-	const Page = styled.div`
-		display: flex;
-		height: 100vh;
-		flex-direction: column;
-		justify-content: space-evenly;
-	`
-	const Header = styled.h1`
-		align-self: center;
-		height: 30px;
-	`
-	const AppContainer = styled.div`
-		display: flex;
-		align-content: center;
-		justify-content: space-around;
-	`
-
 	return (
 		<Page>
-			<Header>Currency Converter & Exchange Rates</Header>
-			<AppContainer>
-				<Converter />
-				<Overview exchangeRates={data} />
-			</AppContainer>
+			<Banner />
+			<Header>
+				<Title>XChange Rates</Title>
+				<Subtitle>Check live rates and convert your currency</Subtitle>
+			</Header>
+			<Converter exchangeRatesMap={exchangeRatesMap} />
+			<Overview exchangeRates={exchangeRates} />
 		</Page>
 	)
 }
