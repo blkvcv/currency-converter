@@ -3,7 +3,7 @@ import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import Select, { SingleValue } from 'react-select'
 
-import { ExchangeRatesMapT, ExchangeRateT } from '../types'
+import { ExchangeRatesMapT } from '../types'
 import { exchangeFromCZK, exchangeToCZK, separateThousands } from '../utils'
 
 const Container = styled.div`
@@ -70,23 +70,6 @@ const Error = styled.div`
 const SelectContainer = styled.div`
 	width: 280px;
 `
-
-// const SwitchButton = styled.button`
-// 	margin-top: 20px;
-// 	font-size: 40px;
-// 	width: 55px;
-// 	cursor: pointer;
-//     border-radius: 100px;
-// 	display: flex;
-// 	justify-content: center;
-// 	border: unset;
-// 	background: unset;
-
-// 	&:hover {
-// 		outline: none;
-// 		border-color: hsl(0, 0%, 70%);
-// 	}
-// `
 
 const ConvertButton = styled.button`
 	cursor: pointer;
@@ -168,8 +151,8 @@ export const Converter = ({ exchangeRatesMap }: Props) => {
 		if (conversionError) setConversionError('')
 
 		const amount = (Number(inputAmount))
-		const currencyFrom = exchangeRatesMap[selectedCurrencyFrom] as ExchangeRateT
-		const currencyTo = exchangeRatesMap[selectedCurrencyTo] as ExchangeRateT
+		const currencyFrom = exchangeRatesMap[selectedCurrencyFrom]
+		const currencyTo = exchangeRatesMap[selectedCurrencyTo]
 
 		let converted = 0
 		if (currencyFrom.code === 'CZK') {
@@ -205,12 +188,6 @@ export const Converter = ({ exchangeRatesMap }: Props) => {
 		}
 	}
 
-	// const switchCurrencies = () => {
-	// 	const currencyFrom = selectedCurrencyFrom
-	// 	setSelectedCurrencyFrom(selectedCurrencyTo)
-	// 	setSelectedCurrencyTo(currencyFrom)
-	// }
-
 	return (
 		<Container>
 			<ActionPanel>
@@ -229,9 +206,7 @@ export const Converter = ({ exchangeRatesMap }: Props) => {
 						/>
 					</SelectContainer>
 				</ActionSection>
-				{/* <ActionSection> */}
-				{/* <SwitchButton onClick={switchCurrencies}>⇄</SwitchButton> */}
-				{/* </ActionSection> */}
+
 				<ActionSection>
 					<Label>To</Label>
 					<SelectContainer>
