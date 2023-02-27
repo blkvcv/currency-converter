@@ -12,12 +12,9 @@ const Container = styled.div`
 	width: 800px;
 	display: flex;
 	flex-direction: column;
-	overflow-y: auto;
-	height: 600px;
 	padding: 10px;
 	border-radius: 8px;
 	box-sizing: border-box;
-	top: 450px;
 	position: relative;
 	align-self: center;
 `

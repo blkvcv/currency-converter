@@ -22,7 +22,7 @@ const Banner = styled.div`
 
 const Header = styled.div`
 	position: relative;
-	top: 10px;
+	top: 30px;
 	width: 100%;
 	height: 100px;
 	display: flex;
@@ -39,6 +39,14 @@ const Subtitle = styled.h4`
 	margin: 5px
 `
 
+const czData = {
+	country: 'Czech Republic',
+	currency: 'Koruna',
+	amount: 1,
+	code: 'CZK',
+	rate: 1,
+}
+
 
 const App = () => {
 	const [exchangeRates, setExchangeRates] = useState<ExchangeRateT[]>([])
@@ -47,7 +55,7 @@ const App = () => {
 	useEffect(() => {
 		const dataFetch = async () => {
 			const result = await axios('http://0.0.0.0:5000/rates')
-			const ratesMap = result.data.reduce((acc: ExchangeRatesMapT, rate: ExchangeRateT) => {
+			const ratesMap = [czData, ...result.data].reduce((acc: ExchangeRatesMapT, rate: ExchangeRateT) => {
 				acc[rate.code] = rate
 
 				return acc
